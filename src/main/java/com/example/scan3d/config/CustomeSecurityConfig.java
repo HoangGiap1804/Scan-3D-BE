@@ -31,14 +31,16 @@ public class CustomeSecurityConfig {
         public SecurityFilterChain filterChain(HttpSecurity http)
                         throws Exception {
                 http
-                                .csrf(csrf -> csrf.disable())
-                                .authorizeHttpRequests(authorize -> authorize
-                                                .requestMatchers("/test/**").permitAll()
-                                                .anyRequest().authenticated())
-                                .oauth2ResourceServer(oauth -> oauth
-                                                .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter))
-                                                .authenticationEntryPoint(customAuthenticationEntryPoint)
-                                                .accessDeniedHandler(customAccessDeniedHandler));
+                        .csrf(csrf -> csrf.disable())
+                        .authorizeHttpRequests(authorize -> authorize
+                                .requestMatchers("/test/**").permitAll()
+                                .requestMatchers("/users/**").permitAll()
+                                .requestMatchers("/users").permitAll()
+                                .anyRequest().authenticated())
+                        .oauth2ResourceServer(oauth -> oauth
+                                .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter))
+                                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                                .accessDeniedHandler(customAccessDeniedHandler));
                                 
 
                 return http.build();

@@ -1,12 +1,13 @@
 package com.example.scan3d.models.response;
 
-import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.Map;
+
 @JsonIgnoreProperties({"stackTrace", "cause", "suppressed", "localizedMessage", "message", "suppressedExceptions"})
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class ErrorResponse extends BaseResponse{
+public class ErrorResponse extends BaseResponse {
 
     private final String error;
     private Map<String, Object> details;
@@ -21,7 +22,7 @@ public class ErrorResponse extends BaseResponse{
         this.error = error;
         this.details = details;
     }
-    
+
     public String getError() {
         return error;
     }

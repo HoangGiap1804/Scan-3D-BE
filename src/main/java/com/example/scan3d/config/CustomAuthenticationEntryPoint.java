@@ -30,9 +30,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(StatusCode.UNAUTHORIZED.getCode());
-
-        log.info("Unauthorized - please login");
-
         ErrorResponse errorResponse = new ErrorResponse("Unauthorized - Please login");
         String json = objectMapper.writeValueAsString(errorResponse);
         response.getWriter().write(json);
