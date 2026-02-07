@@ -50,3 +50,9 @@ logging:
   level:
     org.flywaydb: DEBUG
     org.springframework.security: INFO
+
+keycloak:
+  server-url: "http://localhost:8081"
+  realm: "scan3d"
+  client-id: "backend-service"
+  client-secret: "j0GFFL1SPAI8w17AFDHzj08zRPXj7FMy"

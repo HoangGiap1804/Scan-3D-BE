@@ -41,6 +41,13 @@ public class BaseEntity {
     @Column(name = "updated_by")
     private UUID updatedBy;
 
-    @Column(name = "deleted")
-    private Boolean deleted;
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted = false;
+
+    @PrePersist
+    public void prePersist() {
+        if (deleted == null) {
+            deleted = false;
+        }
+    }
 }

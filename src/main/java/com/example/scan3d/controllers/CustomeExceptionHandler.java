@@ -22,6 +22,13 @@ import jakarta.validation.ConstraintViolationException;
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CustomeExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
+        ErrorResponse errorResponse = new ErrorResponse("Internal Server Error: " + ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorResponse> handleErrorResponse(BadRequestException ex) {
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());

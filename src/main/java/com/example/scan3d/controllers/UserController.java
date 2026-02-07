@@ -7,6 +7,7 @@ import com.example.scan3d.mappers.UserMapper;
 import com.example.scan3d.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,15 +16,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    private UserRepository userRepository;
-    private UserMapper userMapper;
-
-    public UserController(UserRepository userRepository, UserMapper userMapper){
-       this.userRepository = userRepository;
-       this.userMapper = userMapper;
-    }
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @GetMapping("/{id}")
     private ResponseEntity<UserDTO> getUser(
