@@ -1,5 +1,6 @@
 package com.example.scan3d.config;
 
+import com.example.scan3d.models.response.ErrorCode;
 import com.example.scan3d.models.response.ErrorResponse;
 import com.example.scan3d.models.response.StatusCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,9 +28,14 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        log.warn("Access denied on [{}]: {}", request.getRequestURI(), accessDeniedException.getMessage());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(StatusCode.FORBIDDEN.getCode());
-        ErrorResponse errorResponse = new ErrorResponse("Forbidden");
+        ErrorResponse errorResponse = new ErrorResponse(
+                "Forbidden - You do not have permission to access this resource",
+                ErrorCode.FORBIDDEN.getCode(),
+                request.getRequestURI()
+        );
         String json = objectMapper.writeValueAsString(errorResponse);
         response.getWriter().write(json);
         response.flushBuffer();

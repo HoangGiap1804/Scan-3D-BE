@@ -26,6 +26,11 @@ public class TestAPI {
         this.userMapper = userMapper;
     }
 
+    @GetMapping("/hello")
+    private String hello(){
+        return "Helllo";
+    }
+
     @GetMapping("/hello/{testId}")
     private ResponseEntity<UserDTO> TestAPI(
             @PathVariable UUID testId

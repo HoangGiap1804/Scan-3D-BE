@@ -9,11 +9,9 @@ import lombok.Data;
 
 @Data
 public class RegisterRequest extends BaseDTO {
-    @JsonProperty("first_name")
     @NotNull(message = "First name must be not null")
     private String firstName;
 
-    @JsonProperty("last_name")
     @NotNull(message = "Last name must be not null")
     private String lastName;
 

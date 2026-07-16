@@ -5,7 +5,7 @@ import com.example.scan3d.dtos.request.UserRequest;
 import com.example.scan3d.entities.User;
 import com.example.scan3d.mappers.UserMapper;
 import com.example.scan3d.repositories.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.example.scan3d.models.response.errors.NotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class UserController {
             @PathVariable UUID id
     ){
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
         UserDTO userDTO = userMapper.toDTO(user);
         return new ResponseEntity<>(userDTO,HttpStatus.OK);
     }

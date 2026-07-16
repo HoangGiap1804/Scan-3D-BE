@@ -1,5 +1,6 @@
 package com.example.scan3d.config;
 
+import com.example.scan3d.models.response.ErrorCode;
 import com.example.scan3d.models.response.ErrorResponse;
 import com.example.scan3d.models.response.StatusCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +20,6 @@ import java.io.IOException;
 @Slf4j
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-
     private final ObjectMapper objectMapper;
 
     public CustomAuthenticationEntryPoint(ObjectMapper objectMapper) {
@@ -28,9 +28,14 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        log.warn("Unauthorized access on [{}]: {}", request.getRequestURI(), authException.getMessage());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(StatusCode.UNAUTHORIZED.getCode());
-        ErrorResponse errorResponse = new ErrorResponse("Unauthorized - Please login");
+        ErrorResponse errorResponse = new ErrorResponse(
+                "Unauthorized - Please login",
+                ErrorCode.UNAUTHORIZED.getCode(),
+                request.getRequestURI()
+        );
         String json = objectMapper.writeValueAsString(errorResponse);
         response.getWriter().write(json);
         response.flushBuffer();
